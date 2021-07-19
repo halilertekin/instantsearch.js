@@ -1,4 +1,4 @@
-import instantsearch from '../main';
+import instantsearch from '../index';
 
 describe('instantsearch()', () => {
   it('includes a version', () => {
@@ -19,7 +19,22 @@ describe('instantsearch()', () => {
     });
   });
 
-  it('includes the highlight helper function', () => {
-    expect(instantsearch.highlight).toBeInstanceOf(Function);
+  it('includes the helper functions', () => {
+    expect(Object.keys(instantsearch)).toMatchInlineSnapshot(`
+      Array [
+        "version",
+        "routers",
+        "stateMappings",
+        "connectors",
+        "widgets",
+        "middlewares",
+        "createInfiniteHitsSessionStorageCache",
+        "highlight",
+        "reverseHighlight",
+        "snippet",
+        "reverseSnippet",
+        "insights",
+      ]
+    `);
   });
 });

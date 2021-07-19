@@ -1,5 +1,4 @@
-import { InstantSearchOptions } from './types';
-import InstantSearch from './lib/InstantSearch';
+import InstantSearch, { InstantSearchOptions } from './lib/InstantSearch';
 import version from './lib/version';
 import {
   snippet,
@@ -10,18 +9,44 @@ import {
   getInsightsAnonymousUserToken,
 } from './helpers';
 import { createInfiniteHitsSessionStorageCache } from './lib/infiniteHitsCache';
+import { deprecate } from './lib/utils';
 
 const instantsearch = (options: InstantSearchOptions): InstantSearch =>
   new InstantSearch(options);
 
 instantsearch.version = version;
-instantsearch.snippet = snippet;
-instantsearch.reverseSnippet = reverseSnippet;
-instantsearch.highlight = highlight;
-instantsearch.reverseHighlight = reverseHighlight;
+
+// @major remove this in favour of the exports
+instantsearch.createInfiniteHitsSessionStorageCache = deprecate(
+  createInfiniteHitsSessionStorageCache,
+  "import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/'"
+);
+instantsearch.highlight = deprecate(
+  highlight,
+  "import { highlight } from 'instantsearch.js/es/'"
+);
+instantsearch.reverseHighlight = deprecate(
+  reverseHighlight,
+  "import { reverseHighlight } from 'instantsearch.js/es/'"
+);
+instantsearch.snippet = deprecate(
+  snippet,
+  "import { snippet } from 'instantsearch.js/es/'"
+);
+instantsearch.reverseSnippet = deprecate(
+  reverseSnippet,
+  "import { reverseSnippet } from 'instantsearch.js/es/'"
+);
 instantsearch.insights = insights;
 instantsearch.getInsightsAnonymousUserToken = getInsightsAnonymousUserToken;
-instantsearch.createInfiniteHitsSessionStorageCache = createInfiniteHitsSessionStorageCache;
+
+export {
+  snippet,
+  reverseSnippet,
+  highlight,
+  reverseHighlight,
+  createInfiniteHitsSessionStorageCache,
+};
 
 Object.defineProperty(instantsearch, 'widgets', {
   get() {
